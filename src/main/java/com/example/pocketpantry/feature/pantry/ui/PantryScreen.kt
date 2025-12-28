@@ -30,7 +30,7 @@ fun PantryScreen(
             .padding(16.dp)
     ) {
         Text("Pantry", style = MaterialTheme.typography.headlineMedium)
-        Text("Items: ${state.items.size} • Filter: ${state.filter}", style =  MaterialTheme.typography.bodyMedium)
+        Text("Items: ${state.items.size} • Filter: ${state.filter}", style = MaterialTheme.typography.bodyMedium)
         Text("TODO: list + search + filter chips")
     }
 }
