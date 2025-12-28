@@ -59,7 +59,7 @@ private fun pantryTabEntries(backStack: NavBackStack<NavKey>, contentPadding: Pa
 
     val provider = pantryEntryProvider(backStack, contentPadding)
 
-    return rememberDecoratedNavEntries(backStack, entryDecorators = decorators, provider)
+    return rememberDecoratedNavEntries(backStack, decorators, provider)
 }
 
 @Composable
