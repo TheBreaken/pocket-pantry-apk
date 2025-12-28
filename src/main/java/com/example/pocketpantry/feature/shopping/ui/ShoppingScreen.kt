@@ -24,7 +24,7 @@ fun ShoppingScreen(
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.padding(16.dp)
+        modifier = modifier.padding(16.dp)
     ) {
         Text("Shopping", style = typography.headlineMedium)
         Text("Items: ${state.items.size}", style = typography.bodyMedium)

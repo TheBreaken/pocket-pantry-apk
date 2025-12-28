@@ -7,7 +7,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.*
-import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+
 import androidx.navigation3.ui.NavDisplay
 import com.example.pocketpantry.feature.pantry.navigation.PantryList
 import com.example.pocketpantry.feature.pantry.navigation.pantryEntryProvider
