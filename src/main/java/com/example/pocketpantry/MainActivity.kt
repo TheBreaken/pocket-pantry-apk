@@ -1,7 +1,6 @@
 package com.example.pocketpantry
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +18,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.navigation3.runtime.rememberNavBackStack
 import com.example.pocketpantry.feature.pantry.navigation.PantryList
+import com.example.pocketpantry.feature.pantry.ui.utilities.PantryEditActionButton
 import com.example.pocketpantry.feature.shopping.navigation.ShoppingList
 import com.example.pocketpantry.ui.theme.PocketPantryTheme
 
@@ -33,13 +33,26 @@ class MainActivity : ComponentActivity() {
                 val shoppingBackStack = rememberNavBackStack(ShoppingList)
 
                 var currentTab by rememberSaveable() { mutableStateOf(AppTab.Pantry) }
-                Log.d("HELLO", "test")
+
                 Scaffold(
+                    floatingActionButton = {
+                        PantryEditActionButton(
+                            pantryBackStack,
+                            visible = currentTab == AppTab.Pantry,
+                        )
+                    },
                     bottomBar = {
                         NavigationBar {
                             NavigationBarItem(
                                 selected = currentTab == AppTab.Pantry,
-                                onClick = { currentTab = AppTab.Pantry },
+                                onClick = {
+                                    if (currentTab == AppTab.Pantry) {
+                                        pantryBackStack.clear()
+                                        pantryBackStack.add(PantryList)
+                                    } else {
+                                        currentTab = AppTab.Pantry
+                                    }
+                                },
                                 icon = { Icon(Icons.Default.Build, "Pantry") },
                                 label = { Text("Pantry") }
                             )
