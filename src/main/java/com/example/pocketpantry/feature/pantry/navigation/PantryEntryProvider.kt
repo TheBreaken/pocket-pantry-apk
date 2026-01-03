@@ -14,7 +14,6 @@ fun pantryEntryProvider(
     entry<PantryList> {
         PantryScreen(
             contentPadding = contentPadding,
-            onAddItem = { backStack.add(PantryEdit(id = null)) },
             onEditItem = { id -> backStack.add(PantryEdit(id = id)) }
         )
     }

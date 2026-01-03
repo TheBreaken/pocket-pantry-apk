@@ -16,9 +16,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.pocketpantry.feature.pantry.viewmodel.PantryEditViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pocketpantry.PocketPantryApplication
+import com.example.pocketpantry.feature.pantry.viewmodel.PantryEditViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,8 +29,12 @@ fun PantryEditScreen(
     contentPadding: PaddingValues,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: PantryEditViewModel = viewModel()
+    existingViewModel: PantryEditViewModel? = null
 ) {
+    val application = LocalContext.current.applicationContext as PocketPantryApplication
+    val viewModel: PantryEditViewModel = existingViewModel ?: viewModel(
+        factory = PantryEditViewModel.provideFactory(application)
+    )
     val state by viewModel.uiState.collectAsState()
 
     LaunchedEffect(itemId) {
