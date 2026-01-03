@@ -22,7 +22,9 @@ data class PantryUiState(
 )
 
 data class PantryEditUiState(
+    val id: Long? = null,
     val name: String = "",
     val quantityLabel: String = "",
+    val expiryDate: LocalDate? = null,
     val canSave: Boolean = false,
 )
