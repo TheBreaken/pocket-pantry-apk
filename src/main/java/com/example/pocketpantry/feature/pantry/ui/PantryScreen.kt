@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pocketpantry.PocketPantryApplication
 import com.example.pocketpantry.feature.pantry.viewmodel.PantryViewModel
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun PantryScreen(
@@ -118,7 +120,10 @@ private fun PantryItemRow(
                 )
                 item.expiryDate?.let { date ->
                     Text(
-                        text = "Expires: $date",
+                        text = "Expires: ${date.format(DateTimeFormatter.ofPattern(
+                            "d MMM, yyyy",
+                            Locale.getDefault()
+                        ))}",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

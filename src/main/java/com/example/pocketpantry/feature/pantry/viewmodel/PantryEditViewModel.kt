@@ -9,14 +9,13 @@ import com.example.pocketpantry.PocketPantryApplication
 import com.example.pocketpantry.data.model.PantryItem
 import com.example.pocketpantry.data.pantry.PantryRepository
 import com.example.pocketpantry.feature.pantry.ui.PantryEditUiState
+import java.time.LocalDate
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-
 class PantryEditViewModel(
     private val pantryRepository: PantryRepository
 ) : ViewModel() {
@@ -84,7 +83,8 @@ class PantryEditViewModel(
                 PantryItem(
                     id = currentState.id,
                     name = currentState.name.trim(),
-                    quantityLabel = currentState.quantityLabel.trim()
+                    quantityLabel = currentState.quantityLabel.trim(),
+                    expiryDate = currentState.expiryDate
                 )
             )
         }
