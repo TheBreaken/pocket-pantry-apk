@@ -43,7 +43,7 @@ class PantryViewModel(
 
     private fun PantryItem.toUi(referenceDate: LocalDate): PantryItemUi {
         val isExpired = expiryDate?.isBefore(referenceDate) == true
-        val isExpiringSoon = expiryDate?.let { !isExpired && !it.isAfter(referenceDate.plusDays(3)) } == true
+        val isExpiringSoon = expiryDate?.let { !isExpired && it.isBefore(referenceDate.plusDays(3)) } == true
         return PantryItemUi(
             id = id,
             name = name,
