@@ -9,8 +9,11 @@ import com.example.pocketpantry.PocketPantryApplication
 import com.example.pocketpantry.data.model.ShoppingItem
 import com.example.pocketpantry.data.shopping.ShoppingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -29,21 +32,18 @@ data class ShoppingUiState(
 class ShoppingViewModel(
     private val shoppingRepository: ShoppingRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(ShoppingUiState(isLoading = true))
-    val uiState: StateFlow<ShoppingUiState> = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            shoppingRepository.items.collect { items ->
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        items = items.map { item -> item.toUi() }
-                    )
-                }
-            }
+    val uiState: StateFlow<ShoppingUiState> = shoppingRepository.items
+        .map { items ->
+            ShoppingUiState(
+                isLoading = false,
+                items = items.map { item -> item.toUi() }
+            )
         }
-    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = ShoppingUiState(isLoading = true)
+        )
 
     private fun ShoppingItem.toUi(): ShoppingItemUi = ShoppingItemUi(
         id = id,

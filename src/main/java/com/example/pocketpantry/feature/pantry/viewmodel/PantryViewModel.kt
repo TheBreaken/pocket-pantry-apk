@@ -11,35 +11,32 @@ import com.example.pocketpantry.data.pantry.PantryRepository
 import com.example.pocketpantry.feature.pantry.ui.PantryItemUi
 import com.example.pocketpantry.feature.pantry.ui.PantryUiState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import kotlin.time.Duration.Companion.seconds
 
 class PantryViewModel(
     private val pantryRepository: PantryRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(PantryUiState(isLoading = true))
-    val uiState: StateFlow<PantryUiState> = _uiState.asStateFlow()
-
-    init {
-        observePantry()
-    }
-
-    private fun observePantry() {
-        viewModelScope.launch {
-            pantryRepository.items.collect { items ->
-                val today = LocalDate.now()
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        items = items.map { item -> item.toUi(today) }
-                    )
-                }
-            }
+    val uiState: StateFlow<PantryUiState> = pantryRepository.items
+        .map { items ->
+            val today = LocalDate.now()
+            PantryUiState(
+                isLoading = false,
+                items = items.map { item -> item.toUi(today) }
+            )
         }
-    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = PantryUiState(isLoading = true)
+        )
 
     private fun PantryItem.toUi(referenceDate: LocalDate): PantryItemUi {
         val isExpired = expiryDate?.isBefore(referenceDate) == true
