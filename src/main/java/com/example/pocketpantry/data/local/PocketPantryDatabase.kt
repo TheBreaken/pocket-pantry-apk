@@ -29,7 +29,7 @@ abstract class PocketPantryDatabase : RoomDatabase() {
                 context.applicationContext,
                 PocketPantryDatabase::class.java,
                 "pocket_pantry.db"
-            ).fallbackToDestructiveMigration(false).build()
+            ).fallbackToDestructiveMigration(true).build()
         }
     }
 }
