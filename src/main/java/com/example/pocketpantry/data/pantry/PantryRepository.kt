@@ -25,6 +25,6 @@ class PantryRepository(
     }
 
     suspend fun delete(id: Long) = withContext(dispatcher) {
-        pantryDao.getById(id)?.let { pantryDao.delete(it) }
+        pantryDao.deleteById(id)
     }
 }

@@ -14,6 +14,9 @@ interface PantryDao {
     @Query("SELECT * FROM pantry_items WHERE id = :id")
     suspend fun getById(id: Long): PantryEntity?
 
+    @Query("DELETE FROM pantry_items WHERE id = :id")
+    suspend fun deleteById(id: Long)
+
     @Upsert
     suspend fun upsert(item: PantryEntity): Long
 
