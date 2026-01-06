@@ -59,9 +59,7 @@ fun PantryEditScreen(
         initialSelectedDateMillis = state.expiryDate?.toEpochMillis()
     )
 
-    LaunchedEffect(state.expiryDate) {
-        datePickerState.selectedDateMillis = state.expiryDate?.toEpochMillis()
-    }
+    datePickerState.selectedDateMillis = state.expiryDate?.toEpochMillis()
 
     LaunchedEffect(itemId) {
         viewModel.load(itemId)
