@@ -6,13 +6,15 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import android.net.Uri
 import android.provider.Settings
 import android.util.Log
 import android.view.ViewGroup
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.OptIn
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -48,12 +50,11 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.Executors
 
+@OptIn(ExperimentalGetImage::class)
 @Composable
-fun BarcodeScannerScreen(
-    onBarcodeScanned: (String) -> Unit
-) {
+fun BarcodeScannerScreen(onBarcodeScanned: (String) -> Unit) {
     val context = LocalContext.current
-    val activity = context.findActivity() // yes, Compose gives you the Activity through the LocalContext.
+    val activity = context.findActivity()
     val lifecycleOwner = LocalLifecycleOwner.current
 
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
@@ -127,14 +128,21 @@ fun BarcodeScannerScreen(
                             .also {
                                 it.setAnalyzer(Executors.newSingleThreadExecutor()) { imageProxy ->
                                     imageProxy.image?.let { image ->
-                                        val inputImage = InputImage.fromMediaImage(image, imageProxy.imageInfo.rotationDegrees)
+                                        val inputImage = InputImage.fromMediaImage(
+                                            image,
+                                            imageProxy.imageInfo.rotationDegrees
+                                        )
                                         scanner.process(inputImage)
                                             .addOnSuccessListener { barcodes ->
                                                 if (barcodes.isNotEmpty()) {
                                                     Log.d("SCAN", "Barcodes: $barcodes")
-                                                    barcodes.firstOrNull()?.rawValue?.let { barcode ->
+                                                    val barcode = barcodes.firstOrNull()?.rawValue
+                                                    if (barcode != null) {
                                                         if (barcode.isNotBlank()) {
-                                                            Log.d("SCAN", "Barcode scanned $barcode")
+                                                            Log.d(
+                                                                "SCAN",
+                                                                "Barcode scanned $barcode"
+                                                            )
                                                             onBarcodeScanned(barcode)
                                                         }
                                                     }
@@ -162,15 +170,21 @@ fun BarcodeScannerScreen(
                 )
             }
         }
-        activity != null && ActivityCompat.shouldShowRequestPermissionRationale(
-            activity,
-            Manifest.permission.CAMERA
-        ) -> {
+        activity != null &&
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                activity,
+                Manifest.permission.CAMERA
+            ) -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text("Camera permission is required to scan barcodes.")
                     Spacer(Modifier.height(16.dp))
-                    Button(onClick = { requestPermissionLauncher.launch(Manifest.permission.CAMERA) }) {
+                    Button(onClick = {
+                        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+                    }) {
                         Text("Grant permission")
                     }
                 }
@@ -183,7 +197,10 @@ fun BarcodeScannerScreen(
         }
         else -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text("Camera permission permanently denied. You can enable it in Settings.")
                     Spacer(Modifier.height(16.dp))
                     Button(

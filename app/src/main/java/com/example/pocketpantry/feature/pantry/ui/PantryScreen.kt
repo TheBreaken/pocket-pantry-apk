@@ -93,11 +93,7 @@ fun PantryScreen(
 }
 
 @Composable
-private fun PantryItemRow(
-    item: PantryItemUi,
-    onEdit: (Long) -> Unit,
-    onDelete: (Long) -> Unit
-) {
+private fun PantryItemRow(item: PantryItemUi, onEdit: (Long) -> Unit, onDelete: (Long) -> Unit) {
     ElevatedCard(
         onClick = { item.id?.let(onEdit) },
         enabled = item.id != null,
@@ -120,10 +116,12 @@ private fun PantryItemRow(
                 )
                 item.expiryDate?.let { date ->
                     Text(
-                        text = "Expires: ${date.format(DateTimeFormatter.ofPattern(
-                            "d MMM, yyyy",
-                            Locale.getDefault()
-                        ))}",
+                        text = "Expires: ${date.format(
+                            DateTimeFormatter.ofPattern(
+                                "d MMM, yyyy",
+                                Locale.getDefault()
+                            )
+                        )}",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

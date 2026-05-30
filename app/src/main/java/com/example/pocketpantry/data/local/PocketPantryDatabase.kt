@@ -13,7 +13,7 @@ import com.example.pocketpantry.data.shopping.ShoppingEntity
 @Database(
     entities = [
         PantryEntity::class,
-        ShoppingEntity::class,
+        ShoppingEntity::class
     ],
     version = 1,
     exportSchema = false
@@ -24,12 +24,10 @@ abstract class PocketPantryDatabase : RoomDatabase() {
     abstract fun shoppingDao(): ShoppingDao
 
     companion object {
-        fun build(context: Context): PocketPantryDatabase {
-            return Room.databaseBuilder(
-                context.applicationContext,
-                PocketPantryDatabase::class.java,
-                "pocket_pantry.db"
-            ).fallbackToDestructiveMigration(true).build()
-        }
+        fun build(context: Context): PocketPantryDatabase = Room.databaseBuilder(
+            context.applicationContext,
+            PocketPantryDatabase::class.java,
+            "pocket_pantry.db"
+        ).fallbackToDestructiveMigration(true).build()
     }
 }

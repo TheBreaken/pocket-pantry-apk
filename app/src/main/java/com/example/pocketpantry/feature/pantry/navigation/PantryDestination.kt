@@ -4,10 +4,10 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object PantryList: NavKey
+data object PantryList : NavKey
 
 @Serializable
-data class PantryEdit(val id: Long?): NavKey
+data class PantryEdit(val id: Long?) : NavKey
 
 @Serializable
-data object BarcodeScanner: NavKey
+data object BarcodeScanner : NavKey

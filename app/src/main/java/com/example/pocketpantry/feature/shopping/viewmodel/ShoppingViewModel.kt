@@ -8,14 +8,10 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.pocketpantry.PocketPantryApplication
 import com.example.pocketpantry.data.model.ShoppingItem
 import com.example.pocketpantry.data.shopping.ShoppingRepository
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 data class ShoppingItemUi(
     val id: Long?,
@@ -29,9 +25,7 @@ data class ShoppingUiState(
     val items: List<ShoppingItemUi> = emptyList()
 )
 
-class ShoppingViewModel(
-    private val shoppingRepository: ShoppingRepository
-) : ViewModel() {
+class ShoppingViewModel(private val shoppingRepository: ShoppingRepository) : ViewModel() {
     val uiState: StateFlow<ShoppingUiState> = shoppingRepository.items
         .map { items ->
             ShoppingUiState(
@@ -53,12 +47,11 @@ class ShoppingViewModel(
     )
 
     companion object {
-        fun provideFactory(
-            application: PocketPantryApplication
-        ): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                ShoppingViewModel(application.appContainer.shoppingRepository)
+        fun provideFactory(application: PocketPantryApplication): ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    ShoppingViewModel(application.appContainer.shoppingRepository)
+                }
             }
-        }
     }
 }

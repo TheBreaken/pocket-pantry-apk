@@ -29,7 +29,7 @@ fun PantryEditActionButton(
     AnimatedVisibility(
         visible = visible && backStack.lastOrNull() == PantryList,
         enter = fadeIn() + scaleIn(),
-        exit = fadeOut() + scaleOut(),
+        exit = fadeOut() + scaleOut()
     ) {
         FloatingActionButton(
             onClick = { backStack.add(PantryEdit(id = null)) },

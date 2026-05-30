@@ -16,9 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-class PantryEditViewModel(
-    private val pantryRepository: PantryRepository
-) : ViewModel() {
+class PantryEditViewModel(private val pantryRepository: PantryRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(PantryEditUiState())
     val uiState: StateFlow<PantryEditUiState> = _uiState.asStateFlow()
 
@@ -90,17 +88,15 @@ class PantryEditViewModel(
         }
     }
 
-    private fun canSave(name: String, quantityLabel: String): Boolean {
-        return name.isNotBlank() && quantityLabel.isNotBlank()
-    }
+    private fun canSave(name: String, quantityLabel: String): Boolean =
+        name.isNotBlank() && quantityLabel.isNotBlank()
 
     companion object {
-        fun provideFactory(
-            application: PocketPantryApplication
-        ): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                PantryEditViewModel(application.appContainer.pantryRepository)
+        fun provideFactory(application: PocketPantryApplication): ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    PantryEditViewModel(application.appContainer.pantryRepository)
+                }
             }
-        }
     }
 }

@@ -2,7 +2,7 @@ package com.example.pocketpantry.feature.pantry.ui
 
 import java.time.LocalDate
 
-enum class PantryFilter { All, ExpiringSoon, Expiring, }
+enum class PantryFilter { All, ExpiringSoon, Expiring }
 
 data class PantryItemUi(
     val id: Long?,
@@ -10,7 +10,7 @@ data class PantryItemUi(
     val quantityLabel: String,
     val expiryDate: LocalDate? = null,
     val isExpired: Boolean = false,
-    val isExpiringSoon: Boolean = false,
+    val isExpiringSoon: Boolean = false
 )
 
 data class PantryUiState(
@@ -26,5 +26,5 @@ data class PantryEditUiState(
     val name: String = "",
     val quantityLabel: String = "",
     val expiryDate: LocalDate? = null,
-    val canSave: Boolean = false,
+    val canSave: Boolean = false
 )

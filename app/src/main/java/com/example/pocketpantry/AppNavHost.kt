@@ -5,9 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.NavEntryDecorator
 import androidx.navigation3.runtime.NavKey
-import androidx.navigation3.runtime.*
-
+import androidx.navigation3.runtime.rememberDecoratedNavEntries
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.example.pocketpantry.feature.pantry.navigation.PantryList
 import com.example.pocketpantry.feature.pantry.navigation.pantryEntryProvider
@@ -49,7 +50,10 @@ fun AppNavHost(
 }
 
 @Composable
-private fun pantryTabEntries(backStack: NavBackStack<NavKey>, contentPadding: PaddingValues): List<NavEntry<NavKey>> {
+private fun pantryTabEntries(
+    backStack: NavBackStack<NavKey>,
+    contentPadding: PaddingValues
+): List<NavEntry<NavKey>> {
     if (backStack.isEmpty()) backStack.add(PantryList)
 
     val decorators: List<NavEntryDecorator<NavKey>> = listOf(
@@ -63,7 +67,10 @@ private fun pantryTabEntries(backStack: NavBackStack<NavKey>, contentPadding: Pa
 }
 
 @Composable
-private fun shoppingTabEntries(backStack: NavBackStack<NavKey>, contentPadding: PaddingValues): List<NavEntry<NavKey>> {
+private fun shoppingTabEntries(
+    backStack: NavBackStack<NavKey>,
+    contentPadding: PaddingValues
+): List<NavEntry<NavKey>> {
     if (backStack.isEmpty()) backStack.add(ShoppingList)
 
     val decorators: List<NavEntryDecorator<NavKey>> = listOf(
