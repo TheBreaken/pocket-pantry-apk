@@ -1,0 +1,14 @@
+style:
+  MagicNumber:
+    active: false
+  MaxLineLength:
+    active: false
+  UnusedPrivateMember:
+    ignoreAnnotated:
+      - Preview
+
+naming:
+  FunctionNaming:
+    ignoreAnnotated:
+      - Composable
+      - Preview

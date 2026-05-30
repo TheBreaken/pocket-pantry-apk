@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:BarcodeScannerScreen.kt$@OptIn(ExperimentalGetImage::class) @Composable fun BarcodeScannerScreen(onBarcodeScanned: (String) -&gt; Unit)</ID>
+    <ID>LongMethod:BarcodeScannerScreen.kt$@OptIn(ExperimentalGetImage::class) @Composable fun BarcodeScannerScreen(onBarcodeScanned: (String) -&gt; Unit)</ID>
+    <ID>LongMethod:MainActivity.kt$MainActivity$override fun onCreate(savedInstanceState: Bundle?)</ID>
+    <ID>LongMethod:PantryEditScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun PantryEditScreen( itemId: Long?, contentPadding: PaddingValues, onDone: () -&gt; Unit, modifier: Modifier = Modifier, existingViewModel: PantryEditViewModel? = null )</ID>
+    <ID>TooGenericExceptionCaught:BarcodeScannerScreen.kt$e: Exception</ID>
+  </CurrentIssues>
+</SmellBaseline>
