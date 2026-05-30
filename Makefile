@@ -5,12 +5,15 @@ sync:
 
 lint:
 	./gradlew ktlintFormat
-	./gradlew ktlintCheck lint
+	./gradlew ktlintCheck detekt lint
 	./gradlew lint
 
 lint-fix:
 	./gradlew ktlintCheck lintFix
 	./gradlew lintFix
+
+detekt:
+	./gradlew detect
 
 test:
 	./gradlew testDebugUnitTest

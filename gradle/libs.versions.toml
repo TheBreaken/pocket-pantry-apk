@@ -18,6 +18,7 @@ mlkit-barcode = "17.3.0"
 #accompanist-permissions = "0.34.0"
 
 # linter and code analyzer
+detekt = "1.23.8"
 ktlintGradle = "14.2.0"
 
 
@@ -62,4 +63,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 # linter and code analyzer
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle" }
