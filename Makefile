@@ -13,7 +13,7 @@ lint-fix:
 	./gradlew lintFix
 
 detekt:
-	./gradlew detect
+	./gradlew detekt
 
 test:
 	./gradlew testDebugUnitTest
